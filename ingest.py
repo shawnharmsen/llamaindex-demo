@@ -15,19 +15,23 @@ from llama_index.readers.llamahub_modules.github_repo import (
 github_client = GithubClient(os.getenv("GITHUB_TOKEN"))
 loader = GithubRepositoryReader(
     github_client,
-    owner="jerryjliu",
-    repo="llama_index",
+    owner="foundry-rs",
+    repo="foundry",
     filter_directories=(
-        ["llama_index", "docs"],
+        ['.cargo', '.github', 'abi', 'anvil', 'binder',
+         'cast', 'chisel', 'cli', 'common', 'config', 'doc',
+         'docs', 'evm', 'fmt', 'forge', 'foundryup', 'macros',
+         'testdata', 'ui', 'utils'],
         GithubRepositoryReader.FilterType.INCLUDE,
     ),
-    filter_file_extensions=([".py"], GithubRepositoryReader.FilterType.INCLUDE),
+    filter_file_extensions=(['.md', '.sol', '.json', '.js', '.rs', '.toml', '.txt', '.yml']
+                            , GithubRepositoryReader.FilterType.INCLUDE),
     verbose=True,
     concurrent_requests=10,
 )
 
 # 1. Load the documents
-docs = loader.load_data(branch="main")
+docs = loader.load_data(branch="master")
 
 # 2. Parse the docs into nodes
 parser = SimpleNodeParser()

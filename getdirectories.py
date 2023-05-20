@@ -1,5 +1,4 @@
 import requests
-import os
 
 def get_top_level_directories(user, repo):
     api_url = f"https://api.github.com/repos/{user}/{repo}/contents"  # Only get the top level content
